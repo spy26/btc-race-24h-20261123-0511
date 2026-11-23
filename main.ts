@@ -41,7 +41,8 @@ let stoppedOut = false;
 
 function recentHigh(): bigint {
   let high = 0n;
-  const start = closes.length - LOOKBACK;
+  // Clamp the window start so a short closes history never indexes below 0.
+  const start = Math.max(0, closes.length - LOOKBACK);
   for (let i = start; i < closes.length; i++) {
     if (closes[i]! > high) high = closes[i]!;
   }
